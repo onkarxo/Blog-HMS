@@ -1,0 +1,16 @@
+<!-- app1/templates/view_blog_posts.html -->
+<a href="/home.html"> View Profile</a>
+{% for post in blog_posts %}
+<div>
+    <h2>{{ post.title }}</h2>
+    <p>Author: {{ post.author_username }}</p>
+    <img src="{{ post.image.url }}" alt="{{ post.title }}">
+    <p>{{ post.summary|truncatewords:15 }}...</p>
+    {% if post.is_draft %}
+    <p>Status: Draft</p>
+    {% else %}
+    <p>Status: Published</p>
+    {% endif %}
+    <a href="{% url 'edit_blog_post' post.id %}">Edit</a>
+</div>
+{% endfor %}

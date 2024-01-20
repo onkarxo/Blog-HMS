@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Blog Posts</title>
+    <!-- Add any additional styling or scripts as needed -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .blog-post {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 20px;
+            max-width: 300px;
+            display: inline-block;
+            /* Display posts side by side */
+            margin-right: 20px;
+            /* Add some margin between posts */
+            vertical-align: top;
+            /* Align posts at the top */
+            background-color: #fff;
+            /* White background */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* Add a subtle shadow */
+        }
+
+        .blog-post img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+
+        .category-filters {
+            margin-bottom: 20px;
+        }
+
+        .category-filter {
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-right: 10px;
+            color: #4caf50;
+            /* Green color for links */
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .category-filter:hover {
+            background-color: #45a049;
+            color: #fff;
+        }
+        .dashboard-links {
+            
+            margin:20px auto;
+        }
+
+        .dashboard-links a {
+            margin-right: 10px;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            display: inline-block;
+            background-color: #4caf50;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        .dashboard-links a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-links">
+    <a href="{% url 'profile' %}">Profile</a>
+    <a href="{% url 'logout' %}">Logout</a>
+    </div>
+    <h1>Welcome, {{ user.first_name }} {{ user.last_name }}!</h1>
+    <h2>View Blog Posts</h2>
+
+    <!-- Display filtering links for categories -->
+    <div class="category-filters">
+        Filter by Category:
+        <a href="#" class="category-filter" data-category="All">All</a>
+        {% for category in categories %}
+        | <a href="#" class="category-filter" data-category="{{ category }}">{{ category }}</a>
+        {% endfor %}
+    </div>
+
+    <!-- Display blog posts -->
+    <div id="blog-posts-container">
+        {% for post in blog_posts %}
+        <div class="blog-post" data-category="{{ post.category }}">
+            <h3>{{ post.title }}</h3>
+            <p>Author: Dr. {{ post.author.first_name }} {{ post.author.last_name }}</p>
+            {% if post.image %}
+            <img src="{{ post.image.url }}" alt="{{ post.title }} Image">
+            {% endif %}
+            <p><strong>Category:</strong> {{ post.category }}</p>
+            <p>{{ post.summary|truncatewords:15 }} <a href="{% url 'full_blog_post' post.id %}">Read More</a></p>
+        </div>
+        {% endfor %}
+    </div>
+
+    
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Handle category filtering
+            $(".category-filter").on("click", function () {
+                var selectedCategory = $(this).data("category");
+
+                // Show/hide posts based on the selected category
+                if (selectedCategory === "All") {
+                    $(".blog-post").show();
+                } else {
+                    $(".blog-post").hide();
+                    $(".blog-post[data-category='" + selectedCategory + "']").show();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

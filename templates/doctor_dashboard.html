@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Doctor Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .blog-post {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 20px;
+            max-width: 300px;
+            display: inline-block;
+            /* Display posts side by side */
+            margin-right: 20px;
+            /* Add some spacing between posts */
+            vertical-align: top;
+            /* Align posts at the top */
+            min-height: 250px;
+            /* Set a fixed minimum height */
+            background-color: #fff;
+            /* White background */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* Add a subtle shadow */
+        }
+
+        .blog-post img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+
+        .blog-post h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .blog-post p {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .blog-post a {
+            display: block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #4caf50;
+            /* Green color for links */
+        }
+
+        .blog-post a:hover {
+            color: #45a049;
+            /* Darker green color on hover */
+        }
+
+        .dashboard-links {
+            
+            margin:20px auto;
+        }
+
+        .dashboard-links a {
+            margin-right: 10px;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            display: inline-block;
+            background-color: #4caf50;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        .dashboard-links a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-links">
+    <a href="{% url 'profile' %}">Profile</a>
+    <a href="{% url 'create_blog_post' %}">Create New Post</a>
+    <a href="{% url 'logout' %}">Logout</a>
+    </div>
+    <h1>Welcome, Dr. {{ user.first_name }} {{ user.last_name }}!</h1>
+    <h2>Your posts</h2>
+
+    <!-- Display doctor-specific blog posts -->
+    <div>
+        {% for post in doctor_posts %}
+        <div class="blog-post">
+            <h3>{{ post.title }}</h3>
+            {% if post.image %}
+            <img src="{{ post.image.url }}" alt="{{ post.title }} Image">
+            {% endif %}
+            <p><strong>Category:</strong> {{ post.category }}</p>
+            <p><strong>Summary:</strong> {{ post.summary|truncatewords:15 }}</p>
+            <p><strong>Status:</strong> {% if post.is_draft %}Draft{% else %}Published{% endif %}</p>
+            <!-- Add other post details as needed -->
+            <a href="{% url 'edit_blog_post' post.id %}">Edit</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Add links or buttons for creating new posts if needed -->
+    <div class="dashboard-links">
+        
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!-- app1/templates/doctor_dashboard.html -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Doctor Dashboard</title>
+</head>
+
+<body>
+    <h1>Welcome, {{ user.username }}!</h1>
+
+    <!-- Display doctor-specific blog posts -->
+    <h2>Your Blog Posts</h2>
+    <ul>
+        {% for post in doctor_posts %}
+        <li>
+            <a href="{% url 'edit_blog_post' post.id %}">{{ post.title }}</a>
+            <!-- Add other post details as needed -->
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Add links or buttons for creating new posts if needed -->
+
+    <a href="{% url 'logout' %}">Logout</a>
+</body>
+
+</html>

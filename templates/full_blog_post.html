@@ -1,0 +1,67 @@
+<!-- app1/templates/full_blog_post.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }}</title>
+    <!-- Add any additional styling or scripts as needed -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+    
+        h1 {
+            color: #333;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        .category{
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            
+        }
+    
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto; /* Center the image */
+        }
+    
+        a {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: bold;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <h1>{{ post.title }}</h1>
+    <p>Author: {{ post.author.username }}</p>
+    {% if post.image %}
+    <img src="{{ post.image.url }}" alt="{{ post.title }} Image">
+    {% endif %}
+    <div class="category">
+        <p ><strong>Category:</strong> {{ post.category }}</p>
+    </div>
+    
+    <p><strong>Summary:</strong><p>{{ post.summary }}</p>
+    <p><strong>Content:</strong><p>{{ post.content }}</p>
+    <a href="{% url 'view_blog_posts' %}">Back to Blog Posts</a>
+
+    <!-- Add any additional content or links as needed -->
+
+</body>
+
+</html>
